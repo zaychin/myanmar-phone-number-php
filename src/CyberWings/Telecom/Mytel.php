@@ -1,6 +1,6 @@
 <?php
 
-namespace CyberWings\Zaychin\Telecom;
+namespace CyberWings\Telecom;
 
 class Mytel implements TelecomInterface
 {

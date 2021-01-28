@@ -1,6 +1,6 @@
 <?php
 
-namespace CyberWings\Zaychin\Telecom;
+namespace CyberWings\Telecom;
 
 interface TelecomInterface
 {
