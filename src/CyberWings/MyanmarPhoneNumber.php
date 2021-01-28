@@ -10,9 +10,9 @@ class MyanmarPhoneNumber
     private $sanitizer;
 
     public function __construct()
-	{
-		$this->sanitizer = new Sanitizer();
-	}
+    {
+        $this->sanitizer = new Sanitizer();
+    }
 
     /**
      * Validate for Phone Number
@@ -21,11 +21,11 @@ class MyanmarPhoneNumber
      * @return bool
      */
     public function is_valid($number)
-	{
-		return preg_match(
-			'/^(09|\+?950?9|\+?95950?9)\d{7,9}$/', $this->sanitizer->clean( $number )
-		) ? true : false;
-	}
+    {
+        return preg_match(
+            '/^(09|\+?950?9|\+?95950?9)\d{7,9}$/', $this->sanitizer->clean( $number )
+        ) ? true : false;
+    }
 
     /**
      * Validate for provided Phone Number is belongs to provided Telecom
@@ -35,21 +35,21 @@ class MyanmarPhoneNumber
      * @return bool
      */
     public function is_telecom($telecom_name, $number)
-	{
-		if ( $this->is_valid($number) ) {
+    {
+        if ( $this->is_valid($number) ) {
 
-			switch ( strtolower($telecom_name) ) {
-				case "telenor":
-					$telecom = new Telecom\Telenor();
-					break;
+            switch ( strtolower($telecom_name) ) {
+                case "telenor":
+                    $telecom = new Telecom\Telenor();
+                    break;
 
-				case "ooredoo":
-					$telecom = new Telecom\Ooredoo();
-					break;
+                case "ooredoo":
+                    $telecom = new Telecom\Ooredoo();
+                    break;
 
-				case "mpt":
-					$telecom = new Telecom\MPT();
-					break;
+                case "mpt":
+                    $telecom = new Telecom\MPT();
+                    break;
 
                 case "mytel":
                     $telecom = new Telecom\Mytel();
@@ -59,14 +59,14 @@ class MyanmarPhoneNumber
                     $telecom = new Telecom\MEC();
                     break;
 
-				default:
-					die("Invalid Operator Name");
-					break;
-			}
+                default:
+                    die("Invalid Operator Name");
+                    break;
+            }
 
-			return $telecom->check( $number );
-		}
-	}
+            return $telecom->check( $number );
+        }
+    }
 
     /**
      * Get Telecom Name with provided Phone Number
@@ -75,18 +75,18 @@ class MyanmarPhoneNumber
      * @return string "Telecom Name"
      */
     public function telecom_name($number)
-	{
-		if ( $this->is_telecom('telenor', $number) ) {
-			return "Telenor";
-		}
+    {
+        if ( $this->is_telecom('telenor', $number) ) {
+            return "Telenor";
+        }
 
-		if ( $this->is_telecom('ooredoo', $number) ) {
-			return "Ooredoo";
-		}
+        if ( $this->is_telecom('ooredoo', $number) ) {
+            return "Ooredoo";
+        }
 
-		if ( $this->is_telecom('mpt', $number) ) {
-			return "MPT";
-		}
+        if ( $this->is_telecom('mpt', $number) ) {
+            return "MPT";
+        }
 
         if ( $this->is_telecom('mytel', $number) ) {
             return "Mytel";
@@ -96,8 +96,8 @@ class MyanmarPhoneNumber
             return "MEC";
         }
 
-		return "Unknown";
-	}
+        return "Unknown";
+    }
 
     /**
      * Prepend Myanmar Country Code ( 959 ) to provided Phone Number
@@ -108,16 +108,18 @@ class MyanmarPhoneNumber
     public function add_prefix($number)
     {
         if ( $this->is_valid( $number ) ) {
+            // Just to make sure no '+' sign
+            $number = str_replace('+', '', $number);
+
             if ( $this->startWith09($number) ) {
                 // If $number start with 09 remove first 2 words and replace '959'
-                return '959' . substr($number, 2);
+                return ('959' . substr($number, 2));
             }
 
             if ( $this->startWith959($number) ) {
                 // If $number start with 959 remove first 3 words and replace '959'
                 return '959' . substr($number, 3);
             }
-
             // This also replaced '09' after the prefix '09'. So added the 2 if blocks above to only remove first '09'
             return preg_replace('/^\+?959|09/', '959', $number);
         }
@@ -132,9 +134,6 @@ class MyanmarPhoneNumber
      */
     public function startWith09($number)
     {
-        // Just to make sure no '+' sign
-        $number = str_replace('+', '', $number);
-
         if ( substr($number, 0, 2) == '09' ) {
             return true;
         }
@@ -149,9 +148,6 @@ class MyanmarPhoneNumber
      */
     public function startWith959($number)
     {
-        // Just to make sure no '+' sign
-        $number = str_replace('+', '', $number);
-
         if ( substr($number, 0, 3) == '959' ) {
             return true;
         }
