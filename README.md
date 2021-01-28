@@ -3,7 +3,7 @@ PHP port of [mm_phonenumber](https://github.com/Melomap/mm_phonenumber) to check
 Credit: [Original script (Python)](https://github.com/Melomap/mm_phonenumber)
 [Original script (JS)](https://github.com/kaungmyatlwin/myanmar-phonenumber-js)
 
-### Installation
+### Installations
 
 ```
 TODO
