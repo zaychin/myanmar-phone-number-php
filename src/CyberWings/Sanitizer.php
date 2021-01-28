@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace CyberWings;
+namespace CyberWings\Zaychin;
 
 class Sanitizer
 {

@@ -1,7 +1,7 @@
 <?php
     require __DIR__ . "/vendor/autoload.php";
 
-    use CyberWings\MyanmarPhoneNumber;
+    use CyberWings\Zaychin\MyanmarPhoneNumber;
 
     $phone_number = new MyanmarPhoneNumber();
 
