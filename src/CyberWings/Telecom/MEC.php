@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace CyberWings\Telecom;
+namespace CyberWings\Zaychin\Telecom;
 
 class MEC implements TelecomInterface
 {
