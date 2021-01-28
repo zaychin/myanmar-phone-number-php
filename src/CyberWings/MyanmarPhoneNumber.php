@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace CyberWings;
 
@@ -59,7 +59,7 @@ class MyanmarPhoneNumber
                     $telecom = new Telecom\MEC();
                     break;
 
-				default: 
+				default:
 					die("Invalid Operator Name");
 					break;
 			}
@@ -106,11 +106,56 @@ class MyanmarPhoneNumber
      * @return bool|mixed
      */
     public function add_prefix($number)
-	{
-		if ( $this->is_valid( $number ) ) {
-			return preg_replace('/^\+?959|09/', '959', $number);
-		}
+    {
+        if ( $this->is_valid( $number ) ) {
+            if ( $this->startWith09($number) ) {
+                // If $number start with 09 remove first 2 words and replace '959'
+                return '959' . substr($number, 2);
+            }
 
-		return false;
-	}
+            if ( $this->startWith959($number) ) {
+                // If $number start with 959 remove first 3 words and replace '959'
+                return '959' . substr($number, 3);
+            }
+
+            // This also replaced '09' after the prefix '09'. So added the 2 if blocks above to only remove first '09'
+            return preg_replace('/^\+?959|09/', '959', $number);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the number starts with 09..
+     *
+     * @return bool
+     */
+    public function startWith09($number)
+    {
+        // Just to make sure no '+' sign
+        $number = str_replace('+', '', $number);
+
+        if ( substr($number, 0, 2) == '09' ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the number starts with 959..
+     *
+     * @return bool
+     */
+    public function startWith959($number)
+    {
+        // Just to make sure no '+' sign
+        $number = str_replace('+', '', $number);
+
+        if ( substr($number, 0, 3) == '959' ) {
+            return true;
+        }
+
+        return false;
+    }
 }
